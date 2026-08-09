@@ -14,6 +14,7 @@
 
 html{
     scroll-behavior:smooth;
+    overflow-x:hidden;
 }
 
 
@@ -191,6 +192,70 @@ nav a:hover{
     color:#1769ff;
 
 }
+
+
+/* =========================
+   HAMBURGER MENU
+========================= */
+
+.hamburger{
+
+    display:none;
+
+    flex-direction:column;
+    justify-content:center;
+    gap:6px;
+
+    width:40px;
+    height:40px;
+
+    background:none;
+    border:none;
+
+    cursor:pointer;
+
+    z-index:200;
+
+}
+
+
+.hamburger span{
+
+    display:block;
+
+    width:100%;
+    height:3px;
+
+    background:#111;
+
+    border-radius:3px;
+
+    transition:.3s;
+
+}
+
+
+.hamburger.active span:nth-child(1){
+
+    transform:translateY(9px) rotate(45deg);
+
+}
+
+
+.hamburger.active span:nth-child(2){
+
+    opacity:0;
+
+}
+
+
+.hamburger.active span:nth-child(3){
+
+    transform:translateY(-9px) rotate(-45deg);
+
+}
+
+
 
 
 
@@ -1294,108 +1359,421 @@ footer{
 
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================================
+   RESPONSIVE — TABLET (max-width: 1024px)
+========================================================= */
 
+@media (max-width: 1024px){
 
-@media(max-width:900px){
+    section{
 
+        padding:60px 6%;
 
-nav{
+    }
 
-    flex-direction:column;
+    /* --- hamburger aan, volledig menu uit --- */
 
-    gap:20px;
+    .hamburger{
+
+        display:flex;
+
+    }
+
+    nav ul#nav-menu{
+
+        position:fixed;
+
+        top:0;
+        right:0;
+
+        width:70%;
+        max-width:340px;
+        height:100vh;
+
+        margin:0;
+        padding:100px 40px;
+
+        background:#fff;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:35px;
+
+        box-shadow:-10px 0 30px rgba(0,0,0,.15);
+
+        transform:translateX(100%);
+        visibility:hidden;
+        pointer-events:none;
+
+        transition:transform .4s ease, visibility 0s linear .4s;
+
+        z-index:150;
+
+        overflow-y:auto;
+
+    }
+
+    nav ul#nav-menu.active{
+
+        transform:translateX(0);
+        visibility:visible;
+        pointer-events:auto;
+
+        transition:transform .4s ease, visibility 0s linear 0s;
+
+    }
+
+    nav ul#nav-menu li{
+
+        width:100%;
+
+    }
+
+    nav ul#nav-menu a{
+
+        font-size:20px;
+
+    }
+
+    /* overlay achter het menu */
+
+    .nav-overlay{
+
+        content:"";
+
+        position:fixed;
+
+        inset:0;
+
+        background:rgba(0,0,0,.4);
+
+        opacity:0;
+
+        pointer-events:none;
+
+        transition:.3s;
+
+        z-index:140;
+
+    }
+
+    .nav-overlay.active{
+
+        opacity:1;
+
+        pointer-events:auto;
+
+    }
+
+    /* --- hero --- */
+
+    .hero{
+
+        flex-direction:column-reverse;
+
+        text-align:center;
+
+        min-height:auto;
+
+        padding-top:40px;
+
+        padding-bottom:60px;
+
+        gap:40px;
+
+    }
+
+    .hero-text{
+
+        max-width:100%;
+
+    }
+
+    .hero p{
+
+        margin:0 auto;
+
+        max-width:600px;
+
+    }
+
+    .profile-card{
+
+        transform:none;
+
+        width:280px;
+        height:340px;
+
+        margin:0 auto;
+
+    }
+
+    /* --- about --- */
+
+    .about-container{
+
+        flex-direction:column;
+
+        gap:50px;
+
+        text-align:center;
+
+    }
+
+    .about-image{
+
+        margin:0 auto;
+
+        transform:rotate(-2deg);
+
+    }
+
+    .text{
+
+        max-width:100%;
+
+    }
+
+    /* --- skills --- */
+
+    .skills-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    /* --- project detail --- */
+
+    .story-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .sketchbook{
+
+        margin-top:0;
+
+        transform:rotate(0deg);
+
+    }
 
 }
 
 
+/* =========================================================
+   RESPONSIVE — MOBIEL (max-width: 768px)
+========================================================= */
 
-nav ul{
+@media (max-width: 768px){
 
-    flex-wrap:wrap;
+    nav{
 
-    justify-content:center;
+        padding:20px 6%;
+
+    }
+
+    .logo span{
+
+        font-size:32px;
+
+    }
+
+    .logo h3{
+
+        font-size:16px;
+
+    }
+
+    h2{
+
+        font-size:32px;
+
+        margin-bottom:35px;
+
+    }
+
+    .hero h1{
+
+        font-size:clamp(32px,8vw,48px);
+
+        margin:18px 0;
+
+    }
+
+    .hero p{
+
+        font-size:16px;
+
+    }
+
+    .button{
+
+        width:100%;
+
+        text-align:center;
+
+        padding:15px 25px;
+
+    }
+
+    .profile-card{
+
+        width:220px;
+        height:280px;
+
+    }
+
+    .about-image{
+
+        width:100%;
+        max-width:300px;
+        height:360px;
+
+    }
+
+    .text p{
+
+        font-size:16px;
+
+    }
+
+    /* --- projecten --- */
+
+    .projects{
+
+        grid-template-columns:1fr;
+
+        gap:25px;
+
+    }
+
+    /* --- project detail --- */
+
+    .project-hero{
+
+        margin-top:-30px;
+
+        min-height:auto;
+
+    }
+
+    .project-hero h1{
+
+        font-size:clamp(28px,7vw,40px);
+
+    }
+
+    .project-hero .lead{
+
+        font-size:16px;
+
+    }
+
+    .cta-row{
+
+        flex-direction:column;
+
+    }
+
+    .cta-row .button{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+    .gallery{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .gallery img,
+    .gallery video{
+
+        height:220px;
+
+    }
+
+    /* --- lightbox --- */
+
+    .lightbox-paper{
+
+        width:95%;
+
+        padding:25px;
+
+    }
+
+    .close-lightbox,
+    .prev-image,
+    .next-image{
+
+        width:38px;
+        height:38px;
+
+        font-size:18px;
+
+    }
 
 }
 
 
+/* =========================================================
+   RESPONSIVE — KLEINE GSM (max-width: 480px)
+========================================================= */
 
-.hero{
+@media (max-width: 480px){
 
-    flex-direction:column;
+    section{
 
-    text-align:center;
+        padding:50px 6%;
 
-}
+    }
 
+    h2{
 
+        font-size:26px;
 
-.profile-card{
+    }
 
-    width:280px;
+    .hero h1{
 
-}
+        font-size:clamp(28px,9vw,36px);
 
+    }
 
+    .small{
 
-.about-container{
+        font-size:12px;
+        letter-spacing:2px;
 
-    flex-direction:column;
+    }
 
-    gap:50px;
+    .skill-card{
 
-}
+        padding:25px;
 
+        box-shadow:6px 6px 0px #1769ff;
 
-.about-image{
+    }
 
-    width:280px;
+    .tech-icons{
 
-    height:360px;
+        grid-template-columns:repeat(2,1fr);
 
-}
+    }
 
+    nav ul#nav-menu{
 
-.text{
+        width:85%;
 
-    text-align:center;
+        padding:90px 30px;
 
-}
-
-
-.story-layout{
-
-    grid-template-columns:1fr;
-
-    gap:40px;
-
-}
-
-
-.sketchbook{
-
-    max-width:400px;
-
-    margin:auto;
-
-}
-
-
-
-section{
-
-    padding:70px 5%;
-
-}
-
-
-.cta-row{
-
-    justify-content:center;
-
-}
-
+    }
 
 }

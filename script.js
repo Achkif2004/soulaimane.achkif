@@ -40,6 +40,94 @@ elements.forEach(element => {
 
 
 
+/* =========================
+   HAMBURGER / MOBIELE NAVIGATIE
+========================= */
+
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("nav-menu");
+
+if(hamburger && navMenu){
+
+    // overlay dynamisch aanmaken zodat er geen HTML-aanpassing nodig is
+    const overlay = document.createElement("div");
+    overlay.classList.add("nav-overlay");
+    document.body.appendChild(overlay);
+
+    function openMenu(){
+
+        hamburger.classList.add("active");
+        navMenu.classList.add("active");
+        overlay.classList.add("active");
+
+        hamburger.setAttribute("aria-expanded","true");
+
+        document.body.style.overflow = "hidden";
+
+    }
+
+    function closeMenu(){
+
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+        overlay.classList.remove("active");
+
+        hamburger.setAttribute("aria-expanded","false");
+
+        document.body.style.overflow = "";
+
+    }
+
+    hamburger.addEventListener("click", () => {
+
+        const isOpen = navMenu.classList.contains("active");
+
+        if(isOpen){
+
+            closeMenu();
+
+        }else{
+
+            openMenu();
+
+        }
+
+    });
+
+    // menu sluiten bij klik op overlay
+    overlay.addEventListener("click", closeMenu);
+
+    // menu sluiten bij klik op een link (bv. #about)
+    navMenu.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", closeMenu);
+
+    });
+
+    // menu sluiten met Escape
+    document.addEventListener("keydown", (e) => {
+
+        if(e.key === "Escape"){
+
+            closeMenu();
+
+        }
+
+    });
+
+    // menu sluiten als het scherm weer groter wordt dan tablet-breakpoint
+    window.addEventListener("resize", () => {
+
+        if(window.innerWidth > 1024){
+
+            closeMenu();
+
+        }
+
+    });
+
+}
+
 
 
 /* =========================
@@ -197,7 +285,7 @@ document.addEventListener("keydown",(e)=>{
     }
 
 
-    if(e.key === "ArrowLeft"){
+if(e.key === "ArrowLeft"){
 
         prevButton.click();
 
@@ -207,4 +295,4 @@ document.addEventListener("keydown",(e)=>{
 });
 
 
-}
+}   // ← sluit if(lightbox) hier af
