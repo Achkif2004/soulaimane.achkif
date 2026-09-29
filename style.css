@@ -2,7 +2,26 @@
    GENERAL
 ========================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@300;400;600;700;800&display=swap');
+
+
+:root{
+
+    --blue:#1769ff;
+    --ink:#111;
+
+    /* markeerstift achter de titels */
+    --marker:rgba(23,105,255,.2);
+
+    /* plakband op de foto's */
+    --tape:rgba(242,232,196,.88);
+
+    --hand:'Caveat', cursive;
+
+    --ease-out:cubic-bezier(.22,1,.36,1);
+    --ease-back:cubic-bezier(.34,1.56,.64,1);
+
+}
 
 
 *{
@@ -377,11 +396,14 @@ nav a:hover{
 
 .profile-card{
 
+    position:relative;
+
     width:330px;
 
     height:420px;
 
-    overflow:hidden;
+    /* visible zodat het plakband en de notitie over de rand mogen */
+    overflow:visible;
 
     border:3px solid #111;
 
@@ -398,6 +420,8 @@ nav a:hover{
     width:100%;
     height:100%;
     object-fit:cover;
+
+    border-radius:17px;
 
 }
 
@@ -430,7 +454,8 @@ nav a:hover{
     border:3px solid #111;
     border-radius:18px;
 
-    overflow:hidden;
+    /* visible zodat de paperclip boven de foto uitsteekt */
+    overflow:visible;
 
     background:white;
 
@@ -457,6 +482,8 @@ nav a:hover{
 
     object-fit:cover;
     object-position:center;
+
+    border-radius:15px;
 
 }
 
@@ -898,11 +925,13 @@ article div{
 
 .notes{
 
-    font-family:cursive;
+    font-family:var(--hand);
 
-    font-size:16px;
+    font-size:23px;
 
-    line-height:1.8;
+    font-weight:500;
+
+    line-height:1.5;
 
 }
 
@@ -1319,39 +1348,1148 @@ footer{
 
 
 
-/* =========================
-   ANIMATION
-========================= */
+/* =========================================================
+   SCHETSBOEK ANIMATIES
+
+   Werkt samen met script.js:
+   - script.js geeft elementen een data-reveal="..." attribuut
+     (up, drop, pop, flip, write of draw)
+   - zodra een element in beeld komt, krijgt het de class .is-visible
+   - --delay bepaalt wanneer een element start, zo verschijnen
+     dingen één voor één
+
+   De animaties gebruiken de losse eigenschappen translate, rotate
+   en scale. Die komen bovenop de bestaande transform, dus de
+   schuine foto's en kaarten houden gewoon hun eigen stand.
+========================================================= */
 
 
-.hidden{
+/* ---------- basis: verborgen tot het in beeld komt ---------- */
+
+.js [data-reveal]:not(.is-visible){
 
     opacity:0;
 
-    transform:translateY(40px);
+}
 
-    transition:1s;
+
+.js [data-reveal].is-visible{
+
+    animation:sa-up .8s var(--ease-out) var(--delay,0ms) backwards;
 
 }
 
 
-.show{
+/* foto / kaart die op het blad "neergelegd" wordt */
+
+.js [data-reveal="drop"].is-visible{
+
+    animation-name:sa-drop;
+    animation-duration:.9s;
+    animation-timing-function:var(--ease-back);
+
+}
+
+
+/* klein icoontje dat opspringt */
+
+.js [data-reveal="pop"].is-visible{
+
+    animation-name:sa-pop;
+    animation-duration:.6s;
+    animation-timing-function:var(--ease-back);
+
+}
+
+
+/* schetsboek dat openslaat als een bladzijde */
+
+.js [data-reveal="flip"].is-visible{
+
+    animation-name:sa-flip;
+    animation-duration:1.1s;
+
+}
+
+
+/* tekst die letter per letter "geschreven" wordt */
+
+.js [data-reveal="write"].is-visible{
+
+    animation:none;
+
+}
+
+.js [data-reveal="write"].is-visible .char{
+
+    animation:sa-ink .3s ease calc(var(--delay,0ms) + var(--ci,0) * 32ms) backwards;
+
+}
+
+
+/* handgetekende lijn die zichzelf tekent */
+
+.js [data-reveal="draw"]:not(.is-visible){
 
     opacity:1;
 
-    transform:none;
+}
+
+.js [data-reveal="draw"]:not(.is-visible) path{
+
+    stroke-dashoffset:1;
+
+}
+
+.js [data-reveal="draw"].is-visible{
+
+    animation:none;
+
+}
+
+.js [data-reveal="draw"].is-visible path{
+
+    animation:sa-draw var(--draw-time,.9s) ease-in-out var(--delay,0ms) backwards;
 
 }
 
 
 
+@keyframes sa-up{
+
+    from{ opacity:0; translate:0 40px; }
+
+}
+
+@keyframes sa-drop{
+
+    from{ opacity:0; translate:0 -70px; rotate:var(--from-rotate,-8deg); scale:1.08; }
+
+}
+
+@keyframes sa-pop{
+
+    from{ opacity:0; scale:.3; rotate:-14deg; }
+
+}
+
+@keyframes sa-flip{
+
+    from{ opacity:0; rotate:y -80deg; }
+
+}
+
+@keyframes sa-ink{
+
+    from{ opacity:0; }
+
+}
+
+@keyframes sa-draw{
+
+    from{ stroke-dashoffset:1; }
+    to{ stroke-dashoffset:0; }
+
+}
+
+@keyframes sa-wiggle{
+
+    0%,100%{ rotate:0deg; }
+    25%{ rotate:-10deg; }
+    50%{ rotate:8deg; }
+    75%{ rotate:-4deg; }
+
+}
+
+@keyframes sa-tape{
+
+    from{ opacity:0; scale:1.5; }
+
+}
+
+
+
+/* ---------- handgetekende krabbels (SVG) ---------- */
+
+.scribble{
+
+    position:absolute;
+
+    overflow:visible;
+
+    pointer-events:none;
+
+}
+
+
+.scribble path{
+
+    fill:none;
+
+    stroke:var(--ink);
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+
+    /* samen met pathLength="1" in de HTML: zo kan elke lijn zichzelf tekenen */
+    stroke-dasharray:1 2;
+    stroke-dashoffset:0;
+
+}
+
+
+/* toegankelijk: tekst die enkel voor schermlezers bedoeld is */
+
+.sr-only{
+
+    position:absolute;
+
+    width:1px;
+    height:1px;
+
+    overflow:hidden;
+
+    clip:rect(0 0 0 0);
+    clip-path:inset(50%);
+
+    white-space:nowrap;
+
+}
+
+
+
+/* ---------- navigatie: potloodlijn + krabbel onder links ---------- */
+
+.scroll-pencil{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:-1px;
+
+    height:2px;
+
+    pointer-events:none;
+
+}
+
+
+.scroll-pencil-line{
+
+    position:absolute;
+    inset:0;
+
+    background:var(--ink);
+
+    transform:scaleX(0);
+    transform-origin:left center;
+
+}
+
+
+.scroll-pencil-icon{
+
+    position:absolute;
+
+    left:-44px;
+    top:-6px;
+
+    width:44px;
+    height:14px;
+
+    opacity:0;
+
+    transition:opacity .3s;
+
+}
+
+
+.scroll-pencil-icon svg{
+
+    display:block;
+
+    transform-origin:100% 50%;
+
+}
+
+
+.scroll-pencil.is-writing .scroll-pencil-icon{
+
+    opacity:1;
+
+}
+
+
+.scroll-pencil.is-moving .scroll-pencil-icon svg{
+
+    animation:sa-pencil .18s ease-in-out infinite alternate;
+
+}
+
+
+@keyframes sa-pencil{
+
+    from{ rotate:-7deg; }
+    to{ rotate:5deg; }
+
+}
+
+
+#nav-menu a{
+
+    position:relative;
+
+}
+
+
+#nav-menu a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:-3px;
+    right:-3px;
+    bottom:-7px;
+
+    height:9px;
+
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 C 10 1, 18 9, 26 5 S 42 1, 50 5 S 66 9, 74 5 S 90 1, 98 5' fill='none' stroke='%231769ff' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+
+    clip-path:inset(0 100% 0 0);
+
+    transition:clip-path .45s var(--ease-out);
+
+}
+
+
+#nav-menu a:hover::after,
+#nav-menu a:focus-visible::after,
+#nav-menu a.is-active::after{
+
+    clip-path:inset(0 0 0 0);
+
+}
+
+
+
+/* ---------- hero ---------- */
+
+.hero h1 .word{
+
+    display:inline-block;
+
+    color:inherit;
+
+}
+
+
+.hero h1 .accent{
+
+    position:relative;
+
+    display:inline-block;
+
+    color:var(--blue);
+
+}
+
+
+/* dubbele onderlijn onder "design" */
+
+.scribble-underline{
+
+    left:-.04em;
+    bottom:.02em;
+
+    width:calc(100% + .08em);
+    height:.22em;
+
+}
+
+.scribble-underline path{
+
+    stroke-width:3.5;
+
+}
+
+
+/* cirkel rond "technologie" */
+
+.scribble-circle{
+
+    left:-.28em;
+    top:-.06em;
+
+    width:calc(100% + .56em);
+    height:1.3em;
+
+}
+
+.scribble-circle path{
+
+    stroke-width:3;
+
+}
+
+
+/* plakband op de profielfoto (en op de grote foto van een projectpagina) */
+
+.profile-card::before,
+.profile-card::after,
+.tape-frame::before,
+.tape-frame::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-14px;
+
+    width:96px;
+    height:30px;
+
+    background:var(--tape);
+
+    border-left:2px dashed rgba(0,0,0,.06);
+    border-right:2px dashed rgba(0,0,0,.06);
+
+    box-shadow:0 2px 4px rgba(0,0,0,.12);
+
+    z-index:5;
+
+}
+
+.profile-card::before{
+
+    left:-30px;
+
+    transform:rotate(-38deg);
+
+}
+
+.profile-card::after{
+
+    right:-30px;
+
+    transform:rotate(38deg);
+
+}
+
+
+.js .profile-card:not(.is-visible)::before,
+.js .profile-card:not(.is-visible)::after,
+.js .tape-frame:not(.is-visible)::before,
+.js .tape-frame:not(.is-visible)::after{
+
+    opacity:0;
+
+}
+
+.js .profile-card.is-visible::before,
+.js .tape-frame.is-visible::before{
+
+    animation:sa-tape .45s var(--ease-back) calc(var(--delay,0ms) + 750ms) backwards;
+
+}
+
+.js .profile-card.is-visible::after,
+.js .tape-frame.is-visible::after{
+
+    animation:sa-tape .45s var(--ease-back) calc(var(--delay,0ms) + 900ms) backwards;
+
+}
+
+
+/* handgeschreven notities ("dat ben ik!", "zeg gerust hallo!") */
+
+.hand-note,
+.hero .hand-note{
+
+    position:absolute;
+
+    width:max-content;
+
+    font-family:var(--hand);
+    font-weight:700;
+    font-size:30px;
+    line-height:1;
+
+    color:var(--ink);
+
+    pointer-events:none;
+
+}
+
+.hand-note span,
+.hero .hand-note span{
+
+    color:inherit;
+
+}
+
+.hand-note .scribble path{
+
+    stroke-width:2.6;
+
+}
+
+
+.profile-note{
+
+    top:calc(100% + 22px);
+    right:6%;
+
+    rotate:-5deg;
+
+}
+
+.profile-note .scribble{
+
+    right:100%;
+    bottom:30%;
+
+    width:58px;
+    height:62px;
+
+    margin-right:6px;
+
+}
+
+
+
+/* ---------- over mij: paperclip die op de foto klikt ---------- */
+
+.js .about-image.is-visible .paperclip{
+
+    animation:sa-clip .6s var(--ease-back) calc(var(--delay,0ms) + 650ms) backwards;
+
+}
+
+.about-image:hover .paperclip{
+
+    animation:sa-wiggle .6s ease-in-out;
+
+}
+
+.paperclip{
+
+    transform-origin:50% 100%;
+
+}
+
+@keyframes sa-clip{
+
+    from{ opacity:0; translate:0 -40px; }
+
+}
+
+
+
+/* ---------- titels: markeerstift ---------- */
+
+.marker{
+
+    padding:0 .1em;
+    margin:0 -.1em;
+
+    background-image:linear-gradient(var(--marker),var(--marker));
+    background-repeat:no-repeat;
+    background-position:0 88%;
+    background-size:100% .42em;
+
+    -webkit-box-decoration-break:clone;
+    box-decoration-break:clone;
+
+}
+
+.js [data-reveal].is-visible .marker{
+
+    animation:sa-mark .8s var(--ease-out) calc(var(--delay,0ms) + 350ms) backwards;
+
+}
+
+@keyframes sa-mark{
+
+    from{ background-size:0% .42em; }
+
+}
+
+
+
+/* ---------- projecten ---------- */
+
+.number{
+
+    position:relative;
+
+    display:inline-block;
+
+}
+
+.number .scribble{
+
+    left:-.5em;
+    top:-.1em;
+
+    width:calc(100% + 1em);
+    height:1.9em;
+
+}
+
+.number .scribble path{
+
+    stroke:var(--blue);
+    stroke-width:2.2;
+    stroke-dashoffset:1;
+
+    transition:stroke-dashoffset .5s ease;
+
+}
+
+a.project-card:hover .number .scribble path,
+a.project-card:focus-visible .number .scribble path{
+
+    stroke-dashoffset:0;
+
+}
+
+.view-project::after{
+
+    display:inline-block;
+
+    margin-left:.3em;
+
+    transition:translate .3s var(--ease-out);
+
+}
+
+a.project-card:hover .view-project::after{
+
+    translate:6px 0;
+
+}
+
+@media (hover:hover){
+
+    a.project-card:nth-child(odd):hover article{
+
+        transform:translateY(-10px) rotate(-1.2deg);
+
+    }
+
+    a.project-card:nth-child(even):hover article{
+
+        transform:translateY(-10px) rotate(1.2deg);
+
+    }
+
+}
+
+
+
+/* ---------- skills ---------- */
+
+.tech:hover img{
+
+    animation:sa-wiggle .6s ease-in-out;
+
+}
+
+
+
+/* ---------- contact ---------- */
+
+.contact-cta{
+
+    position:relative;
+
+    display:inline-block;
+
+}
+
+.contact-note{
+
+    right:calc(100% + 80px);
+    top:30px;
+
+    rotate:-6deg;
+
+}
+
+.contact-note .scribble{
+
+    left:calc(100% + 8px);
+    top:-4px;
+
+    width:62px;
+    height:34px;
+
+}
+
+
+
+/* ---------- projectpagina's ---------- */
+
+.story-layout{
+
+    perspective:1400px;
+
+}
+
+.sketchbook{
+
+    transform-origin:0% 50%;
+
+}
+
+.notes p{
+
+    width:fit-content;
+
+}
+
+.back-link{
+
+    transition:color .3s, translate .3s var(--ease-out);
+
+}
+
+.back-link:hover{
+
+    translate:-4px 0;
+
+}
+
+/* titel: woord per woord + een krabbel die bij het project past */
+
+.project-hero{
+
+    position:relative;
+
+}
+
+.project-hero h1 .word{
+
+    display:inline-block;
+
+}
+
+.project-hero h1 .accent{
+
+    position:relative;
+
+    display:inline-block;
+
+    color:var(--blue);
+
+}
+
+/* stoomwolkjes boven "Ramen" */
+
+.scribble-steam{
+
+    left:16%;
+    bottom:74%;
+
+    width:68%;
+    height:.44em;
+
+}
+
+.scribble-steam path{
+
+    stroke-width:3;
+
+}
+
+/* vinkje achter "voltooiing" (neemt zelf plaats in, zodat het mee naar een nieuwe regel gaat) */
+
+.scribble.scribble-check{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:.72em;
+    height:.72em;
+
+    margin-left:.12em;
+
+    vertical-align:-.02em;
+
+}
+
+.scribble-check path{
+
+    stroke-width:9;
+
+}
+
+
+/* handgeschreven notitie naast de intro */
+
+.project-hero .lead{
+
+    position:relative;
+
+}
+
+.lead-note{
+
+    left:calc(100% + 60px);
+    top:6px;
+
+    rotate:-6deg;
+
+}
+
+.lead-note .scribble{
+
+    right:55%;
+    top:calc(100% + 4px);
+
+    width:70px;
+    height:60px;
+
+}
+
+
+/* handgeschreven notitie rechts naast de knoppen */
+
+.cta-note{
+
+    display:none;
+
+}
+
+.cta-note .scribble{
+
+    right:calc(100% + 8px);
+    top:-4px;
+
+    width:62px;
+    height:34px;
+
+}
+
+@media (min-width: 1301px){
+
+    .project-hero .cta-row{
+
+        position:relative;
+
+        width:fit-content;
+
+    }
+
+    .cta-note{
+
+        display:block;
+
+        left:calc(100% + 80px);
+        top:50%;
+
+        margin-top:-.5em;
+
+        rotate:-4deg;
+
+    }
+
+}
+
+
+/* grote projectfoto met plakband */
+
+.tape-frame{
+
+    position:relative;
+
+    margin-top:22px;
+
+}
+
+.tape-frame .project-hero-img{
+
+    margin-top:0;
+
+}
+
+.tape-frame::before{
+
+    left:-26px;
+    top:-8px;
+
+    transform:rotate(-32deg);
+
+}
+
+.tape-frame::after{
+
+    right:-26px;
+    top:-8px;
+
+    transform:rotate(32deg);
+
+}
+
+
+/* galerij: foto's met een stukje plakband en handgeschreven onderschrift */
+
+.gallery-item{
+
+    position:relative;
+
+}
+
+.gallery-item > figure{
+
+    height:100%;
+
+}
+
+.gallery-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-13px;
+    left:50%;
+
+    width:110px;
+    height:28px;
+
+    margin-left:-55px;
+
+    background:var(--tape);
+
+    border-left:2px dashed rgba(0,0,0,.06);
+    border-right:2px dashed rgba(0,0,0,.06);
+
+    box-shadow:0 2px 4px rgba(0,0,0,.12);
+
+    transform:rotate(var(--tape-rotate,-3deg));
+
+    z-index:5;
+
+}
+
+.js .gallery-item:not(.is-visible)::before{
+
+    opacity:0;
+
+}
+
+.js .gallery-item.is-visible::before{
+
+    animation:sa-tape .45s var(--ease-back) calc(var(--delay,0ms) + 700ms) backwards;
+
+}
+
+.gallery figcaption{
+
+    font-family:var(--hand);
+    font-size:22px;
+    font-weight:500;
+
+    line-height:1.3;
+
+    color:#333;
+
+}
+
+
+/* schetsboek: spiraal langs de rug */
+
+.sketchbook{
+
+    position:relative;
+
+}
+
+.sketchbook::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-11px;
+    top:22px;
+    bottom:22px;
+
+    width:20px;
+
+    background:radial-gradient(circle at 50% 50%, transparent 0 4px, var(--ink) 4.5px 6.5px, transparent 7px) 0 0 / 20px 24px repeat-y;
+
+}
+
+
+/* getekende vinkjes in de opsomming */
+
+.js .feature-list li::before{
+
+    display:none;
+
+}
+
+.scribble-tick{
+
+    --draw-time:.45s;
+
+    left:0;
+    top:.35em;
+
+    width:18px;
+    height:16px;
+
+}
+
+.scribble-tick path{
+
+    stroke:var(--blue);
+    stroke-width:2.6;
+
+}
+
+
+/* lightbox: het papier valt op tafel, foto's schuiven */
+
+.lightbox.active .lightbox-paper{
+
+    animation:sa-drop .55s var(--ease-back);
+
+}
+
+.lightbox-image.is-swapping{
+
+    animation:sa-swap .4s var(--ease-out);
+
+}
+
+@keyframes sa-swap{
+
+    from{ opacity:0; translate:var(--swap-from,40px) 0; rotate:1.5deg; }
+
+}
+
+
+
+/* ---------- kleinere schermen ---------- */
+
+@media (max-width: 1150px){
+
+    /* te weinig plaats naast de intro */
+    .lead-note{
+
+        display:none;
+
+    }
+
+}
+
+@media (max-width: 1024px){
+
+    /* de foto staat hier boven de tekst, dus geen notitie eronder */
+    .profile-note{
+
+        display:none;
+
+    }
+
+}
+
+@media (max-width: 768px){
+
+    /* knop mag hier weer de volle breedte nemen */
+    .contact-cta{
+
+        display:block;
+
+    }
+
+    .contact-note{
+
+        display:none;
+
+    }
+
+    /* kleiner plakband op de grote projectfoto */
+    .tape-frame::before,
+    .tape-frame::after{
+
+        width:62px;
+        height:22px;
+
+        top:-6px;
+
+    }
+
+    .tape-frame::before{
+
+        left:-12px;
+
+    }
+
+    .tape-frame::after{
+
+        right:-12px;
+
+    }
+
+}
+
+
+
+/* ---------- geen animatie als de bezoeker dat vraagt, of bij printen ---------- */
+
 @media (prefers-reduced-motion: reduce){
 
-    .hidden{
+    .js [data-reveal],
+    .js [data-reveal] .char,
+    .js [data-reveal] .marker,
+    .js [data-reveal]::before,
+    .js [data-reveal]::after,
+    .js [data-reveal] path,
+    .lightbox-paper,
+    .lightbox-image,
+    .paperclip,
+    .tech img{
 
-        opacity:1;
-        transform:none;
+        animation:none !important;
+        opacity:1 !important;
+
+    }
+
+    .scroll-pencil-icon svg{
+
+        animation:none !important;
+
+    }
+
+    #nav-menu a::after,
+    .number .scribble path{
+
         transition:none;
+
+    }
+
+}
+
+@media print{
+
+    .js [data-reveal],
+    .js [data-reveal] .char{
+
+        opacity:1 !important;
+        animation:none !important;
+
+    }
+
+    .scroll-pencil{
+
+        display:none;
 
     }
 
