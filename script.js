@@ -564,7 +564,8 @@ if(hamburger && navMenu){
     // overlay dynamisch aanmaken zodat er geen HTML-aanpassing nodig is
     const overlay = document.createElement("div");
     overlay.classList.add("nav-overlay");
-    document.body.appendChild(overlay);
+    // in de nav plaatsen, zodat de overlay ONDER het menu ligt (zelfde stapelvolgorde)
+    (hamburger.closest("nav") || document.body).appendChild(overlay);
 
     function openMenu(){
 
@@ -574,7 +575,7 @@ if(hamburger && navMenu){
 
         hamburger.setAttribute("aria-expanded","true");
 
-        document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden";
 
     }
 
@@ -586,7 +587,7 @@ if(hamburger && navMenu){
 
         hamburger.setAttribute("aria-expanded","false");
 
-        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
 
     }
 

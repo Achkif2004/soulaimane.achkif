@@ -39,6 +39,11 @@ html{
 
 body{
 
+    /* niets mag breder zijn dan het scherm (anders kan je op gsm opzij
+       schuiven en lijkt de navigatie te verdwijnen). 'clip' i.p.v. 'hidden'
+       zodat de sticky navigatie blijft werken */
+    overflow-x:clip;
+
     font-family:'Inter', sans-serif;
     color:#111;
     background:white;
@@ -2511,6 +2516,19 @@ a.project-card:hover .view-project::after{
 
     /* --- hamburger aan, volledig menu uit --- */
 
+    /* geen blur-filter op mobiel: een filter maakt van de nav het
+       referentiekader voor position:fixed, waardoor het uitschuifmenu
+       en de donkere overlay niet meer over het hele scherm lagen */
+
+    nav{
+
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+
+        background:rgba(255,255,255,.97);
+
+    }
+
     .hamburger{
 
         display:flex;
@@ -2527,6 +2545,7 @@ a.project-card:hover .view-project::after{
         width:70%;
         max-width:340px;
         height:100vh;
+        height:100dvh;
 
         margin:0;
         padding:100px 40px;
