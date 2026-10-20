@@ -1,0 +1,164 @@
+{
+  "script.js": {
+    "mtime": 1790850248.4238815,
+    "seen": 1791590265.7557893,
+    "ast_hash": "cdc33ba4f36374b79b24ee27a74e398b",
+    "semantic_hash": "cdc33ba4f36374b79b24ee27a74e398b"
+  },
+  "index.html": {
+    "mtime": 1791279378.451041,
+    "seen": 1791590265.7557938,
+    "ast_hash": "644d6e8ca192ddfa0aff15a8e1b10e48",
+    "semantic_hash": "644d6e8ca192ddfa0aff15a8e1b10e48"
+  },
+  "project1.html": {
+    "mtime": 1791279378.4669104,
+    "seen": 1791590265.7557955,
+    "ast_hash": "e94bcab9cc5aee330a4bd48aee2f2d44",
+    "semantic_hash": "e94bcab9cc5aee330a4bd48aee2f2d44"
+  },
+  "project2.html": {
+    "mtime": 1791279378.478661,
+    "seen": 1791590265.7557962,
+    "ast_hash": "0475b0fbfc2568fee210c8ab307e76a8",
+    "semantic_hash": "0475b0fbfc2568fee210c8ab307e76a8"
+  },
+  "project3.html": {
+    "mtime": 1791279378.490559,
+    "seen": 1791590265.755797,
+    "ast_hash": "9f35b420cc1b5c9ae1e6e1c93e8929dc",
+    "semantic_hash": "9f35b420cc1b5c9ae1e6e1c93e8929dc"
+  },
+  "favicon.jpg": {
+    "mtime": 1786116752.7025762,
+    "seen": 1791590265.7557974,
+    "ast_hash": "c65b3534968160ac6edb1b9207b6697b",
+    "semantic_hash": "c65b3534968160ac6edb1b9207b6697b"
+  },
+  "favicon.png": {
+    "mtime": 1786118286.020804,
+    "seen": 1791590265.7557986,
+    "ast_hash": "d3108719cf078b9ad0b9f78c7a461d2e",
+    "semantic_hash": "d3108719cf078b9ad0b9f78c7a461d2e"
+  },
+  "images/Ramen_kiosk.png": {
+    "mtime": 1748452789.3299642,
+    "seen": 1791590265.755799,
+    "ast_hash": "f9f93de40c92d40e1839d017457dc304",
+    "semantic_hash": "f9f93de40c92d40e1839d017457dc304"
+  },
+  "images/TODO_3.png": {
+    "mtime": 1760881979.2011561,
+    "seen": 1791590265.7557995,
+    "ast_hash": "ac1140febf10f3ad56689b6f372fa128",
+    "semantic_hash": "ac1140febf10f3ad56689b6f372fa128"
+  },
+  "images/TO_DO1.png": {
+    "mtime": 1760881718.3774338,
+    "seen": 1791590265.7558002,
+    "ast_hash": "7ad4fa3eee7dec93108a3cca638a040c",
+    "semantic_hash": "7ad4fa3eee7dec93108a3cca638a040c"
+  },
+  "images/TO_DO2.png": {
+    "mtime": 1760881894.991279,
+    "seen": 1791590265.7558007,
+    "ast_hash": "e339e2b2aab60f8a11f7193a98a39748",
+    "semantic_hash": "e339e2b2aab60f8a11f7193a98a39748"
+  },
+  "images/blender.svg": {
+    "mtime": 1759243837.8475387,
+    "seen": 1791590265.7558017,
+    "ast_hash": "85fee1db0cfb4438919d226da5060359",
+    "semantic_hash": "85fee1db0cfb4438919d226da5060359"
+  },
+  "images/css.svg": {
+    "mtime": 1759242855.2193348,
+    "seen": 1791590265.7558024,
+    "ast_hash": "e7ba3340b463ad1d3e864452462dd459",
+    "semantic_hash": "e7ba3340b463ad1d3e864452462dd459"
+  },
+  "images/figma.svg": {
+    "mtime": 1759242855.2193348,
+    "seen": 1791590265.7558029,
+    "ast_hash": "f260561d4ef86c3d4995ccedb19ff54c",
+    "semantic_hash": "f260561d4ef86c3d4995ccedb19ff54c"
+  },
+  "images/foodkiosk-schets.png": {
+    "mtime": 1785937227.697847,
+    "seen": 1791590265.7558033,
+    "ast_hash": "28aaafd2fc1971434d214f01ecbb1eb2",
+    "semantic_hash": "28aaafd2fc1971434d214f01ecbb1eb2"
+  },
+  "images/html.svg": {
+    "mtime": 1759242856.2027488,
+    "seen": 1791590265.7558038,
+    "ast_hash": "6c3dc153cac6e7e0b7747139fe8d067d",
+    "semantic_hash": "6c3dc153cac6e7e0b7747139fe8d067d"
+  },
+  "images/illustrator.svg": {
+    "mtime": 1759244411.9657586,
+    "seen": 1791590265.7558048,
+    "ast_hash": "2c26b3084cb028f6131d642e1e0d8f65",
+    "semantic_hash": "2c26b3084cb028f6131d642e1e0d8f65"
+  },
+  "images/js.svg": {
+    "mtime": 1759242855.1118026,
+    "seen": 1791590265.7558053,
+    "ast_hash": "7832409bc488dd7eb110ac8e8fe76bed",
+    "semantic_hash": "7832409bc488dd7eb110ac8e8fe76bed"
+  },
+  "images/php.svg": {
+    "mtime": 1759242855.8000252,
+    "seen": 1791590265.7558057,
+    "ast_hash": "77bdba3de4e6099ce2b63c749d26f7b1",
+    "semantic_hash": "77bdba3de4e6099ce2b63c749d26f7b1"
+  },
+  "images/profile.jpg": {
+    "mtime": 1785751974.9336207,
+    "seen": 1791590265.7558062,
+    "ast_hash": "1c2eaf6c440cf2f0ad62416dee3df8db",
+    "semantic_hash": "1c2eaf6c440cf2f0ad62416dee3df8db"
+  },
+  "images/project1.png": {
+    "mtime": 1747042827.6475928,
+    "seen": 1791590265.755807,
+    "ast_hash": "f350e817797538e86a68b68ebfe7a836",
+    "semantic_hash": "f350e817797538e86a68b68ebfe7a836"
+  },
+  "images/project3.png": {
+    "mtime": 1763391955.5258064,
+    "seen": 1791590265.7558076,
+    "ast_hash": "717c4cae39c285065af28a1eb451d2f9",
+    "semantic_hash": "717c4cae39c285065af28a1eb451d2f9"
+  },
+  "images/react.svg": {
+    "mtime": 1759242855.785018,
+    "seen": 1791590265.7558086,
+    "ast_hash": "3081ebaf40eedf44279329453f4e31f3",
+    "semantic_hash": "3081ebaf40eedf44279329453f4e31f3"
+  },
+  "images/roadmate mockups.png": {
+    "mtime": 1761214068.7635927,
+    "seen": 1791590265.755809,
+    "ast_hash": "04ebf199c72c055d13794f039ed5829f",
+    "semantic_hash": "04ebf199c72c055d13794f039ed5829f"
+  },
+  "images/roadmate_desktop.png": {
+    "mtime": 1761215321.52254,
+    "seen": 1791590265.7558098,
+    "ast_hash": "98de348e702eec377d5789169bb2ce56",
+    "semantic_hash": "98de348e702eec377d5789169bb2ce56"
+  },
+  "images/roadmate_gsm.jpg": {
+    "mtime": 1761215222.776339,
+    "seen": 1791590265.7558103,
+    "ast_hash": "5ad231cdb2d564705fd97947ee04bbfa",
+    "semantic_hash": "5ad231cdb2d564705fd97947ee04bbfa"
+  },
+  "images/ramen_kiosk_animation.mp4": {
+    "mtime": 1748443448.0763795,
+    "seen": 1791590265.7558107,
+    "ast_hash": "74b6a31f798f520f4708a57225b670d9",
+    "semantic_hash": "74b6a31f798f520f4708a57225b670d9"
+  }
+}
